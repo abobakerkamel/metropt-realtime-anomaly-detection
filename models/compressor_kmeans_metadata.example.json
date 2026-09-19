@@ -1,0 +1,21 @@
+{
+  "model_name": "metropt_kmeans_v1",
+  "algorithm": "Spark MLlib K-Means",
+  "features": [
+    "TP2",
+    "TP3",
+    "DV_pressure",
+    "Reservoirs",
+    "Oil_temperature",
+    "Motor_current"
+  ],
+  "training_rows": 303959,
+  "k": 5,
+  "threshold_quantile": 0.99,
+  "threshold": 3.032087,
+  "stored_predictions": 50000,
+  "normal_predictions": 49423,
+  "anomalies": 577,
+  "avg_anomaly_score": 1.1298,
+  "max_anomaly_score": 12.3245
+}

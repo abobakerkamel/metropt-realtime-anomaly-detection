@@ -1,0 +1,17 @@
+{
+  "repository_name": "metropt-realtime-anomaly-detection",
+  "prepared_for_github": true,
+  "large_dataset_included": false,
+  "large_model_binary_included": false,
+  "dataset_expected_path": "data/raw/MetroPT3(AirCompressor).csv",
+  "final_architecture": [
+    "Python Replay Producer",
+    "Kafka",
+    "Spark Structured Streaming",
+    "Spark MLlib K-Means",
+    "PostgreSQL",
+    "Apache Superset",
+    "Apache Airflow",
+    "Docker Compose"
+  ]
+}

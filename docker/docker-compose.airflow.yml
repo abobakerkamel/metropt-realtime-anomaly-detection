@@ -1,0 +1,31 @@
+services:
+  airflow-db-init:
+    image: postgres:16
+    environment:
+      PGPASSWORD: metropt
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: >
+      bash -lc "psql -h postgres -U metropt -d postgres -tc \"SELECT 1 FROM pg_database WHERE datname='airflow_meta'\" | grep -q 1 || psql -h postgres -U metropt -d postgres -c 'CREATE DATABASE airflow_meta'"
+    networks: [backend]
+
+  airflow:
+    image: apache/airflow:3.3.1
+    ports:
+      - "127.0.0.1:8085:8080"
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://metropt:metropt@postgres:5432/airflow_meta
+      AIRFLOW__CORE__LOAD_EXAMPLES: "False"
+      _PIP_ADDITIONAL_REQUIREMENTS: psycopg2-binary==2.9.9
+      POSTGRES_HOST: postgres
+    volumes:
+      - ../airflow/dags:/opt/airflow/dags
+      - ../airflow/logs:/opt/airflow/logs
+      - ..:/opt/project
+    depends_on:
+      airflow-db-init:
+        condition: service_completed_successfully
+    command: standalone
+    networks: [backend]
